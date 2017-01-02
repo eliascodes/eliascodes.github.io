@@ -4,8 +4,6 @@ const Canvas = require('./canvas.js')
 
 const NUM_RWS = 10
 const NUM_STEPS = 1000
-const POS_NAME = [window.innerWidth/2, 200]
-const POS_SUBTITLE = [window.innerWidth/2, 300]
 const SCALE = 15
 let CENTRE = [0, 0]
 const RADIUS = 150
@@ -15,24 +13,26 @@ const initCanvas = () => {
   canvas.width = window.innerWidth
   canvas.height = document.querySelector('main').getBoundingClientRect().top
   canvas.adjustResolution(window)
-  CENTRE = [canvas.width/2, canvas.height/2 * 0.9]
+  CENTRE = [canvas.width/2, canvas.height/2]
   return canvas
 }
 
-const drawName = (canvas) => {
+const drawName = (canvas, cnt) => {
+  const POS_NAME     = [cnt[0], cnt[1]*0.9]
+  const POS_HANDLE   = [cnt[0], cnt[1]*1.0]
+  const POS_SUBTITLE = [cnt[0], cnt[1]*1.1]
+
   canvas.ctx.font = '1.5em "Consolas", "Monaco", "Lucida Console", sans-serif'
   canvas.ctx.textAlign = 'center'
   canvas.ctx.fillText('Elias Malik', ...POS_NAME)
+  canvas.ctx.font = '0.8em "Consolas", "Monaco", "Lucida Console", sans-serif'
+  canvas.ctx.fillText('@eliascodes', ...POS_HANDLE)
   canvas.ctx.fillText('Developer & Analyst', ...POS_SUBTITLE)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = initCanvas()
-  drawName(canvas)
-
-  // canvas.ctx.beginPath()
-  // canvas.ctx.arc(...CENTRE, RADIUS, 0, 2*Math.PI)
-  // canvas.ctx.stroke()
+  drawName(canvas, CENTRE)
 
   const mag = (x, y) => x**2 + y**2
   const centre = (x, y) => [CENTRE[0] - x, CENTRE[1] - y]
