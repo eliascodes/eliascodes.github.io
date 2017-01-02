@@ -7,7 +7,6 @@
  */
 /* Document
    ========================================================================== */
-@import url("https://fonts.googleapis.com/css?family=Martel+Sans:200");
 html {
   font-family: sans-serif;
   /* 1 */
@@ -404,7 +403,7 @@ template {
   display: none; }
 
 body {
-  font-family: 'Martel Sans', sans-serif; }
+  font-family: 'Consolas', 'Monaco', 'Lucida Console', sans-serif; }
 
 body {
   overflow: hidden; }
