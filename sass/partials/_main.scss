@@ -1,0 +1,72 @@
+@keyframes fade-in-move-down {
+  0% {
+    top: 0em;
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.1;
+  }
+
+  100% {
+    top: 2.5em;
+    opacity: 1;
+  }
+}
+
+main {
+  background-color: #000;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  span, a {
+    color: white;
+  }
+
+  .link-container {
+    padding: 3em 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+
+    .keybase {
+      background-image: url('../img/keybase.svg');
+    }
+
+    .github {
+      background-image: url('../img/github.svg');
+    }
+
+    .linkedin {
+      background-image: url('../img/linkedin.svg');
+    }
+
+    .link {
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+
+      height: 2.2em;
+      margin: 0 2em;
+    }
+
+    .link span {
+      position: relative;
+      opacity: 0;
+    }
+
+    .link:hover span {
+      animation: fade-in-move-down 0.7s ease-in-out forwards;
+    }
+  }
+}
+
+.copyright {
+  text-align: center;
+
+  span {
+    font-size: 0.5em;
+  }
+}
