@@ -11,7 +11,9 @@ exports.roundToNearestN = (n, num) =>
   Math.round(num / n) * n
 
 exports.polar2cartesian = (theta, r) =>
-  [R * Math.cos(theta), R * Math.sin(theta)]
+  [r * Math.cos(theta), r * Math.sin(theta)]
 
 exports.coordTransform = (origin, vector) =>
   origin.map((a, i) => a - vector[i])
+
+exports.range = (a, b) => [...Array(b - a + 1).keys()].map(v => v + a)

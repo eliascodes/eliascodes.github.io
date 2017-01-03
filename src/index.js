@@ -1,4 +1,4 @@
-const { randomInt, roundToNearestN } = require('./utils.js')
+const { randomInt, roundToNearestN, coordTransform, polar2cartesian, range } = require('./utils.js')
 const RandomWalk = require('./rw.js')
 const Canvas = require('./canvas.js')
 
@@ -35,11 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   drawName(canvas, CENTRE)
 
   const mag = (x, y) => x**2 + y**2
-  const centre = (x, y) => [CENTRE[0] - x, CENTRE[1] - y]
-  const centredMag = (x, y) => mag(...centre(x, y))
-  const uncentre = (x, y) => [CENTRE[0] + x, CENTRE[1] + y]
-
-
+  const centredMag = (x, y) => mag(...coordTransform(CENTRE, [x, y]))
   const isValidStep = (x, y) => centredMag(x, y) > RADIUS**2
 
   const createRandomWalk = (limit, scale, xy) => {
@@ -54,18 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return rw
   }
 
-  let randomWalks = []
-  const theta_step = 2*Math.PI/NUM_RWS
-  const angToCoords = (theta, R) => [R * Math.cos(theta), R * Math.sin(theta)]
-  for (let ii = 0; ii < NUM_RWS; ii++) {
-    randomWalks.push(
-      createRandomWalk(
-        NUM_STEPS,
-        SCALE,
-        uncentre(...angToCoords(theta_step*ii, 2*RADIUS))
-      )
-    )
-  }
+  let randomWalks =
+    range(0, NUM_RWS)
+      .map(ii  => 2 * Math.PI / ii)                           // equally spaced points around unit circle
+      .map(ang => polar2cartesian(ang, 2 * RADIUS))           // transform to xy-coords in CENTRE-frame
+      .map(xy  => coordTransform(xy, CENTRE.map(v => -v)))    // transform to xy-coords in canvas-frame
+      .map(xy  => createRandomWalk(NUM_STEPS, SCALE, ...xy))  // create RandomWalk instance
 
   const drawFrame = () => {
     randomWalks = randomWalks.filter(w => !w.limitReached())
